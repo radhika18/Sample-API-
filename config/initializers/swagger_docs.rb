@@ -1,3 +1,8 @@
+class Swagger::Docs::Config
+  def self.transform_path(path, api_version)
+    "api/v3/#{path}"
+  end
+end
 Swagger::Docs::Config.register_apis({
   "1.0" => {
     # the extension used for the API
@@ -5,11 +10,11 @@ Swagger::Docs::Config.register_apis({
     # the output location where your .json files are written to
     :api_file_path => "public/api/v1/",
     # the URL base path to your API
-    :base_path => "http://api.somedomain.com",
+    :base_path => "http://localhost:3000",
     # if you want to delete all .json files at each generation
     :clean_directory => false,
     # Ability to setup base controller for each api version. Api::V1::SomeController for example.
-    :parent_controller => Api::V1::TasksController,
+    #:parent_controller => Api::V1::TasksController,
     # add custom attributes to api-docs
     :attributes => {
       :info => {

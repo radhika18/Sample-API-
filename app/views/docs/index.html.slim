@@ -1,0 +1,72 @@
+doctype html
+html
+  head
+    title API Document
+    = stylesheet_link_tag "swagger"
+    = csrf_meta_tags
+    body
+      #header
+        .swagger-ui-wrap
+          = link_to("API", "", { id: "logo" })
+          form#api_selector
+            .input
+              input#input_baseUrl name="baseUrl" placeholder="api/v1/api-docs.json" type="text"
+            .input
+              input#input_apiKey name="apiKey" placeholder="api_key" type="text"
+            .input
+              input#input_liveKey name="liveKey" placeholder="live_key" type="text"
+            .input
+              = link_to("Explore", "#", id: "explore")
+      #message-bar.swagger-ui-wrap
+        | \ 
+      #swagger-ui-container.swagger-ui-wrap
+    = javascript_include_tag  "swagger"
+    = javascript_tag do
+      | $(function () {
+      |   window.swaggerUi = new SwaggerUi({
+      |     url: "http:localhost:3001/api/v3/api-docs.json",
+      |     dom_id: "swagger-ui-container",
+      |     supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
+      |     onComplete: function(swaggerApi, swaggerUi){
+      |       if(console) {
+      |         console.log("Loaded SwaggerUI")
+      |       }
+      |       $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+      |      },
+      |     onFailure: function(data) {
+      |       if(console) {
+      |         console.log("Unable to Load SwaggerUI");
+      |         console.log(data);
+      |       }
+      |     },
+      |     docExpansion: "none"
+      |   });
+      |
+      |   $('#input_apiKey').change(function() {
+      |     var key = $('#input_apiKey')[0].value;
+      |     console.log("key: " + key);
+      |     if(key && key.trim() != "") {
+      |       console.log("added key " + key);
+      |       window.authorizations.add("X-API-KEY", new ApiKeyAuthorization("X-API-KEY", key, "header"));
+      |     }
+      |   });
+      |
+      |   $('#input_liveKey').change(function() {
+      |     var key = $('#input_liveKey')[0].value;
+      |     console.log("key: " + key);
+      |     if(key && key.trim() != "") {
+      |       console.log("added key " + key);
+      |       window.authorizations.add("X-LIVE-KEY", new ApiKeyAuthorization("X-LIVE-SERVER-KEY", key, "header"));
+      |     }
+      |   });
+      |
+      |   $('#input_teamName').change(function() {
+      |     var key = $('#input_teamName')[0].value;
+      |     console.log("key: " + key);
+      |     if(key && key.trim() != "") {
+      |       console.log("added team " + key);
+      |       window.authorizations.add("X-TEAM-NAME", new ApiKeyAuthorization("X-TEAM-NAME", key, "header"));
+      |     }
+      |   });
+      |   window.swaggerUi.load();
+      |  });

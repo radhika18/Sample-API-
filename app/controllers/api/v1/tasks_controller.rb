@@ -1,18 +1,31 @@
-class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :update, :destroy]
+class Api::V1::TasksController < ActionController::Base
+          #before_action :set_task, only: [:show, :update, :destroy]
 
-  swagger_controller :tasks, "Tasks"
+          swagger_controller :tasks, "Tasks"
 
-  swagger_api :show do
-    summary "Fetches all properties"
-    param :path, :id, :integer, :required, "Task Id"
-    response :unauthorized
-    response :not_acceptable
-  end
-  
-  def show
-    render :json => {result:"Success"}, :status => 200
-  end
+          swagger_api :show do
+            summary "Fetches all properties"
+            param :path, :id, :integer, :required, "Task Id"
+            response :unauthorized
+            response :not_acceptable
+          end
+          
+          def show
+            render :json => {result:"Success"}, :status => 200
+          end
+
+          swagger_api :index do
+            summary "Fetches all User items"
+            notes "This lists all the active users"
+            param :query, :page, :integer, :optional, "Page number"
+            response :unauthorized
+            response :not_acceptable
+            response :requested_range_not_satisfiable
+          end
+
+          def index
+            render :json => {result:"Success"}, :status => 200
+          end
 
   # GET /tasks
   # GET /tasks.json
@@ -70,4 +83,4 @@ class TasksController < ApplicationController
   #   def task_params
   #     params.require(:task).permit(:title, :completed, :order)
   #   end
-end
+          end

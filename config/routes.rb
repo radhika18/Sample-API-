@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
-  resources :tasks, except: [:new, :edit]
+
+  resources :docs
+  namespace :api do
+    namespace :v1 do
+      resources :tasks
+    end
+  end
+
+end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -54,4 +62,3 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-end

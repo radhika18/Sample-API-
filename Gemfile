@@ -7,9 +7,10 @@ gem 'rails-api'
 
 gem 'spring', :group => :development
 gem 'swagger-docs'
+gem 'slim', :require => 'slim'
+gem 'slim_assets'
 gem 'active_model_serializers', '~> 0.9.5'
 gem 'sqlite3'
-
 
 
 # To use ActiveModel has_secure_password
